@@ -645,7 +645,19 @@
 
   <script src="/assets/js/main.js"></script>
 
-
-
+  <!-- Vercel Analytics + Speed Insights. Cookieless, anonymous, RGPD-compliant.
+       Skipped on localhost so dev doesn't 404. -->
+  <script>
+    (function () {
+      var h = location.hostname;
+      if (h === 'localhost' || h === '127.0.0.1' || h.endsWith('.local')) return;
+      ['/_vercel/insights/script.js', '/_vercel/speed-insights/script.js'].forEach(function (src) {
+        var s = document.createElement('script');
+        s.defer = true;
+        s.src = src;
+        document.head.appendChild(s);
+      });
+    })();
+  </script>
 </body>
 </html>

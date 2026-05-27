@@ -100,6 +100,9 @@
       <dl>
         <dt>Hébergement</dt>
         <dd>Vercel Inc. (États-Unis) — fournisseur d'hébergement web statique.</dd>
+
+        <dt>Mesure d'audience</dt>
+        <dd>Vercel Inc. — service <em>Vercel Analytics</em> &amp; <em>Speed Insights</em>, mesure anonyme du trafic et des performances techniques, sans cookies ni identifiants persistants.</dd>
       </dl>
 
       <h2>Transferts hors Union Européenne</h2>
@@ -109,8 +112,19 @@
         <li>La signature de <strong>clauses contractuelles types</strong> (SCC) approuvées par la Commission européenne.</li>
       </ul>
 
-      <h2>Cookies &amp; traceurs</h2>
-      <p>Le site sgchorsemanship.fr <strong>ne dépose aucun cookie de mesure d'audience, de publicité ou de profilage</strong>. Aucun outil d'analyse comportementale (Google Analytics, Meta Pixel, etc.) n'est utilisé. À ce titre, aucun bandeau de consentement aux cookies n'est nécessaire.</p>
+      <h2>Mesure d'audience &amp; performance</h2>
+      <p>Le site utilise les services <strong>Vercel Analytics</strong> et <strong>Vercel Speed Insights</strong> pour mesurer l'audience (pages vues, pays, type d'appareil) et la performance technique (Core Web Vitals) de manière strictement anonyme.</p>
+      <p>Ces services :</p>
+      <ul>
+        <li><strong>n'utilisent aucun cookie</strong> ni stockage local persistant ;</li>
+        <li><strong>n'identifient pas individuellement</strong> les visiteurs et ne permettent aucun suivi entre sites ;</li>
+        <li>anonymisent les adresses IP côté serveur ;</li>
+        <li>ne collectent <strong>aucune donnée personnelle</strong> au sens du RGPD.</li>
+      </ul>
+      <p>Conformément aux recommandations de la CNIL relatives aux outils de mesure d'audience strictement anonymes, ces traceurs sont <strong>exemptés de consentement préalable</strong>.</p>
+
+      <h2>Cookies</h2>
+      <p>Le site <strong>ne dépose aucun cookie</strong> de mesure d'audience, de publicité ou de profilage. Aucun outil d'analyse comportementale (Google Analytics, Meta Pixel, etc.) n'est utilisé. À ce titre, aucun bandeau de consentement aux cookies n'est nécessaire.</p>
       <p>Seuls des cookies techniques strictement nécessaires au bon fonctionnement du site (le cas échéant) peuvent être déposés ; ils ne nécessitent pas votre consentement préalable.</p>
 
       <h2>Vos droits</h2>
@@ -160,5 +174,18 @@
     </div>
   </footer>
 
+  <!-- Vercel Analytics + Speed Insights. Cookieless, anonymous, RGPD-compliant. -->
+  <script>
+    (function () {
+      var h = location.hostname;
+      if (h === 'localhost' || h === '127.0.0.1' || h.endsWith('.local')) return;
+      ['/_vercel/insights/script.js', '/_vercel/speed-insights/script.js'].forEach(function (src) {
+        var s = document.createElement('script');
+        s.defer = true;
+        s.src = src;
+        document.head.appendChild(s);
+      });
+    })();
+  </script>
 </body>
 </html>
