@@ -1,32 +1,86 @@
-// Hover-to-play for the "En séance" reels. The <video> elements ship with
-// preload="metadata" + poster, so first paint is just the still image; the
-// video bytes only stream once the pointer enters. On touch devices (no
-// hover), tap toggles play/pause.
+// "En séance" reels — rotating cycle of 4 videos. Each plays STEP_MS, then
+// the next one takes over; loops forever. Hover on a reel interrupts the
+// cycle and plays that reel from start; mouse-leave resumes the cycle at
+// the next reel. On touch devices (no hover), the cycle runs uninterrupted.
 (function () {
-  const reels = document.querySelectorAll('.reel__video');
+  const reels = Array.from(document.querySelectorAll('.reel__video'));
   if (!reels.length) return;
 
+  const STEP_MS = 3000;
   const hasHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-  reels.forEach((video) => {
-    if (hasHover) {
+  let cycleIdx = 0;
+  let cycleTimer = null;
+  let hovered = false;
+
+  function playOnly(idx) {
+    reels.forEach((v, i) => {
+      if (i === idx) {
+        // play() rejects if a pause() races with it — swallow to avoid noise.
+        try { v.currentTime = 0; } catch (_) {}
+        v.play().catch(() => {});
+      } else {
+        v.pause();
+      }
+    });
+  }
+
+  function tick() {
+    if (hovered) return;
+    cycleIdx = (cycleIdx + 1) % reels.length;
+    playOnly(cycleIdx);
+    cycleTimer = setTimeout(tick, STEP_MS);
+  }
+
+  function startCycle() {
+    stopCycle();
+    playOnly(cycleIdx);
+    cycleTimer = setTimeout(tick, STEP_MS);
+  }
+
+  function stopCycle() {
+    if (cycleTimer) { clearTimeout(cycleTimer); cycleTimer = null; }
+  }
+
+  if (hasHover) {
+    reels.forEach((video, i) => {
       const phone = video.closest('.reel__phone') || video;
       phone.addEventListener('mouseenter', () => {
-        // play() returns a promise that rejects if interrupted by a pause()
-        // racing with it — swallow to avoid unhandled-rejection noise.
-        video.play().catch(() => {});
+        hovered = true;
+        stopCycle();
+        playOnly(i);
       });
       phone.addEventListener('mouseleave', () => {
-        video.pause();
-        video.currentTime = 0;
+        hovered = false;
+        cycleIdx = (i + 1) % reels.length; // resume at the next reel
+        startCycle();
       });
+    });
+  }
+
+  // Wait for the first reel to be near the viewport before kicking the cycle —
+  // saves CPU/bandwidth above the fold and avoids autoplay being throttled by
+  // the page-load contention.
+  function kickOff() {
+    if ('IntersectionObserver' in window) {
+      const target = reels[0].closest('.reels') || reels[0];
+      const io = new IntersectionObserver((entries) => {
+        if (entries.some(e => e.isIntersecting)) {
+          io.disconnect();
+          startCycle();
+        }
+      }, { rootMargin: '200px 0px' });
+      io.observe(target);
     } else {
-      video.addEventListener('click', () => {
-        if (video.paused) video.play().catch(() => {});
-        else video.pause();
-      });
+      startCycle();
     }
-  });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', kickOff, { once: true });
+  } else {
+    kickOff();
+  }
 })();
 
 // Reveal animations on scroll. The CSS already hides these elements at first
