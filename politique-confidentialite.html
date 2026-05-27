@@ -99,21 +99,21 @@
       <p>Vos données sont destinées exclusivement à Coralie Maguet. Aucune donnée n'est transmise à des partenaires commerciaux. Seuls les prestataires techniques nécessaires au fonctionnement du site peuvent y avoir un accès strictement limité :</p>
       <dl>
         <dt>Hébergement</dt>
-        <dd>Vercel Inc. (États-Unis) — fournisseur d'hébergement web statique.</dd>
+        <dd>Cloudflare, Inc. (États-Unis) — fournisseur d'hébergement web statique via le service Cloudflare Pages. Le contenu est distribué depuis le réseau de serveurs européens de Cloudflare pour les visiteurs en Europe.</dd>
 
         <dt>Mesure d'audience</dt>
-        <dd>Vercel Inc. — service <em>Vercel Analytics</em> &amp; <em>Speed Insights</em>, mesure anonyme du trafic et des performances techniques, sans cookies ni identifiants persistants.</dd>
+        <dd>Cloudflare, Inc. — service <em>Cloudflare Web Analytics</em>, mesure anonyme du trafic et des Core Web Vitals, sans cookies ni identifiants persistants.</dd>
       </dl>
 
       <h2>Transferts hors Union Européenne</h2>
-      <p>L'hébergeur du site, Vercel Inc., est une société américaine. Bien que les serveurs utilisés puissent être situés dans l'Union Européenne, un transfert de données vers les États-Unis est susceptible de se produire. Ce transfert est encadré par :</p>
+      <p>L'hébergeur du site, Cloudflare, Inc., est une société américaine. Pour les visiteurs européens, les requêtes sont servies depuis le réseau de serveurs européens de Cloudflare ; cependant un transfert vers les États-Unis peut intervenir pour les fonctions d'administration. Ce transfert est encadré par :</p>
       <ul>
-        <li>L'adhésion de Vercel Inc. au <strong>Data Privacy Framework</strong> UE–États-Unis ;</li>
+        <li>L'adhésion de Cloudflare, Inc. au <strong>Data Privacy Framework</strong> UE–États-Unis ;</li>
         <li>La signature de <strong>clauses contractuelles types</strong> (SCC) approuvées par la Commission européenne.</li>
       </ul>
 
       <h2>Mesure d'audience &amp; performance</h2>
-      <p>Le site utilise les services <strong>Vercel Analytics</strong> et <strong>Vercel Speed Insights</strong> pour mesurer l'audience (pages vues, pays, type d'appareil) et la performance technique (Core Web Vitals) de manière strictement anonyme.</p>
+      <p>Le site utilise le service <strong>Cloudflare Web Analytics</strong> pour mesurer l'audience (pages vues, pays, type d'appareil) et la performance technique (Core Web Vitals) de manière strictement anonyme.</p>
       <p>Ces services :</p>
       <ul>
         <li><strong>n'utilisent aucun cookie</strong> ni stockage local persistant ;</li>
@@ -174,18 +174,7 @@
     </div>
   </footer>
 
-  <!-- Vercel Analytics + Speed Insights. Cookieless, anonymous, RGPD-compliant. -->
-  <script>
-    (function () {
-      var h = location.hostname;
-      if (h === 'localhost' || h === '127.0.0.1' || h.endsWith('.local')) return;
-      ['/_vercel/insights/script.js', '/_vercel/speed-insights/script.js'].forEach(function (src) {
-        var s = document.createElement('script');
-        s.defer = true;
-        s.src = src;
-        document.head.appendChild(s);
-      });
-    })();
-  </script>
+  <!-- Web Analytics is injected automatically by Cloudflare Pages when
+       enabled in the project's Web Analytics tab. No script needed here. -->
 </body>
 </html>

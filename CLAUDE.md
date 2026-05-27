@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this repo is
 
-A static one-page marketing site (French) for **SGC Horsemanship** — Coralie Maguet, comportementaliste équin / equine behaviorist, based in **Lesdain (59258)** near Cambrai, declared activity start 30/04/2026, SIRET 10253781800019, code APE 9609Z. Target production deploy: **Vercel**, domain `sgchorsemanship.fr` (not yet acquired at time of writing).
+A static one-page marketing site (French) for **SGC Horsemanship** — Coralie Maguet, comportementaliste équin / equine behaviorist, based in **Lesdain (59258)** near Cambrai, declared activity start 30/04/2026, SIRET 10253781800019, code APE 9609Z. Target production deploy: **Cloudflare Pages** (switched from Vercel; CF Pages allows commercial use on the free tier and uses an EU-friendly edge network), domain `sgchorsemanship.fr` (not yet acquired at time of writing).
 
 The site was originally shipped as a single self-contained HTML file produced by an external "bundler" (`SGC Horsemanship.html`, ~4.6 MB, all assets inlined as gzipped base64). It has since been refactored into a conventional static site (see "Layout" below). The bundle file remains in the repo for reference / fallback but is **no longer the deployable artifact** — `index.html` plus `assets/` is.
 
@@ -12,7 +12,7 @@ The site was originally shipped as a single self-contained HTML file produced by
 
 1. ✅ **Refactor** — extract from monolithic bundle into real static files (`index.html`, `assets/css`, `assets/js`, `assets/fonts`, `assets/img`, `assets/video`). Fonts self-hosted (woff2, latin + latin-ext only — non-latin subsets dropped). Reels converted from static images to `<video>` with autoplay-on-hover.
 2. ✅ **SEO** — Nord (59) local SEO done. Title/description optimized, OG + Twitter Card, JSON-LD `@graph` (LocalBusiness with SIRET, Person, 6× Service, Review, WebSite), `sitemap.xml`, `robots.txt`, canonical, hreflang fr-FR, favicon set, `site.webmanifest`. Images optimized to WebP (-94%) + `<picture>` + lazy loading + dimensions. Videos compressed via ffmpeg (-70%, audio stripped). Lighthouse mobile 100/100/100/100. Desktop 100/100/100 + 89 agentic, with one Lighthouse CLS quirk (real trace measures CLS=0).
-3. ✅ **Légal / RGPD** — `mentions-legales.html` (LCEN art. 6: identité éditeur Coralie Maguet, statut micro-entrepreneur, adresse Lesdain, SIRET, APE 9609Z, TVA franchise base, hébergeur Vercel Inc.) and `politique-confidentialite.html` (responsable du traitement, données collectées, finalités, base légale RGPD, conservation 3/5 ans, sous-traitant Vercel, transferts US encadrés DPF/SCC, aucun cookie/tracker, 7 droits RGPD, modalités d'exercice, recours CNIL). Both at 100/100/100/100 Lighthouse. Footer links added on all pages. Email = placeholder `contact@sgchorsemanship.fr` to replace before deploy.
+3. ✅ **Légal / RGPD** — `mentions-legales.html` (LCEN art. 6: identité éditeur Coralie Maguet, statut micro-entrepreneur, adresse Lesdain, SIRET, APE 9609Z, TVA franchise base, hébergeur Cloudflare, Inc.) and `politique-confidentialite.html` (responsable du traitement, données collectées, finalités, base légale RGPD, conservation 3/5 ans, sous-traitant Cloudflare pour hébergement + Web Analytics, transferts US encadrés DPF/SCC, aucun cookie de tracking, 7 droits RGPD, modalités d'exercice, recours CNIL). Both at 100/100/100/100 Lighthouse. Footer links added on all pages. Email = placeholder `contact@sgchorsemanship.fr` to replace before deploy.
 
 Form backend and analytics are explicitly deferred ("plus tard" per user).
 
@@ -22,7 +22,7 @@ Form backend and analytics are explicitly deferred ("plus tard" per user).
 index.html                 deployable entry point (~24 KB after SEO+JSON-LD, semantic, BEM CSS classes, <main> landmark)
 mentions-legales.html      LCEN-compliant legal mentions page
 politique-confidentialite.html  GDPR / RGPD privacy policy page
-vercel.json                cleanUrls + cache headers + basic security headers
+_headers                   Cloudflare Pages — cache headers + basic security headers (clean URLs are automatic on CF Pages)
 favicon.svg                modern browsers (mauve rounded square + italic serif "s")
 favicon-16x16.png          \
 favicon-32x32.png           |  generated from favicon.svg via `sips -Z N`
@@ -62,7 +62,7 @@ There's no build step — it's static HTML/CSS/JS. Serve the repo root via any s
 python3 -m http.server 8765 --bind 127.0.0.1
 ```
 
-The site uses absolute paths (`/assets/...`), so `file://` won't work — use a server. Vercel will serve the same paths in production.
+The site uses absolute paths (`/assets/...`), so `file://` won't work — use a server. Cloudflare Pages will serve the same paths in production.
 
 ## Re-running the bundle extraction (rare)
 
