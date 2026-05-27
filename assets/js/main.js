@@ -1,78 +1,46 @@
-// "En séance" reels — rotating cycle of 4 videos. Each plays STEP_MS, then
-// the next one takes over; loops forever. Hover on a reel interrupts the
-// cycle and plays that reel from start; mouse-leave resumes the cycle at
-// the next reel. On touch devices (no hover), the cycle runs uninterrupted.
+// "En séance" reels — all 4 videos play in parallel. Hovering one pauses
+// the other three and isolates focus on the hovered reel; mouse-leave
+// restarts them all. Cycle kicks off when the section is near the viewport
+// (saves above-the-fold CPU). On touch devices (no hover), all four just
+// keep playing.
 (function () {
   const reels = Array.from(document.querySelectorAll('.reel__video'));
   if (!reels.length) return;
 
-  const STEP_MS = 3000;
   const hasHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-  let cycleIdx = 0;
-  let cycleTimer = null;
-  let hovered = false;
+  function playAll() {
+    // play() rejects if a pause() races with it — swallow to avoid noise.
+    reels.forEach(v => { v.play().catch(() => {}); });
+  }
 
-  function playOnly(idx) {
+  function isolate(idx) {
     reels.forEach((v, i) => {
-      if (i === idx) {
-        // play() rejects if a pause() races with it — swallow to avoid noise.
-        try { v.currentTime = 0; } catch (_) {}
-        v.play().catch(() => {});
-      } else {
-        v.pause();
-      }
+      if (i === idx) v.play().catch(() => {});
+      else v.pause();
     });
-  }
-
-  function tick() {
-    if (hovered) return;
-    cycleIdx = (cycleIdx + 1) % reels.length;
-    playOnly(cycleIdx);
-    cycleTimer = setTimeout(tick, STEP_MS);
-  }
-
-  function startCycle() {
-    stopCycle();
-    playOnly(cycleIdx);
-    cycleTimer = setTimeout(tick, STEP_MS);
-  }
-
-  function stopCycle() {
-    if (cycleTimer) { clearTimeout(cycleTimer); cycleTimer = null; }
   }
 
   if (hasHover) {
     reels.forEach((video, i) => {
       const phone = video.closest('.reel__phone') || video;
-      phone.addEventListener('mouseenter', () => {
-        hovered = true;
-        stopCycle();
-        playOnly(i);
-      });
-      phone.addEventListener('mouseleave', () => {
-        hovered = false;
-        cycleIdx = (i + 1) % reels.length; // resume at the next reel
-        startCycle();
-      });
+      phone.addEventListener('mouseenter', () => isolate(i));
+      phone.addEventListener('mouseleave', () => playAll());
     });
   }
 
-  // Wait for the first reel to be near the viewport before kicking the cycle —
-  // saves CPU/bandwidth above the fold and avoids autoplay being throttled by
-  // the page-load contention.
   function kickOff() {
     if ('IntersectionObserver' in window) {
       const target = reels[0].closest('.reels') || reels[0];
       const io = new IntersectionObserver((entries) => {
         if (entries.some(e => e.isIntersecting)) {
           io.disconnect();
-          startCycle();
+          playAll();
         }
       }, { rootMargin: '200px 0px' });
       io.observe(target);
     } else {
-      startCycle();
+      playAll();
     }
   }
 
