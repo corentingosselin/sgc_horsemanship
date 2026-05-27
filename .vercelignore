@@ -1,0 +1,10 @@
+# Exclude dev artifacts and archival sources from the Vercel deployment.
+# What stays = the deployable site only.
+
+_build/
+SGC Horsemanship.html
+CLAUDE.md
+.git
+.gitignore
+.gitattributes
+.DS_Store

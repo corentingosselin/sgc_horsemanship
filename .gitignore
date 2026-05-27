@@ -1,0 +1,23 @@
+# macOS
+.DS_Store
+
+# Original raw media — kept locally for archival re-encodes, not in git.
+# The deployable copies (optimized) live under assets/img/ and assets/video/.
+content/
+
+# Build scratch — regeneratable from the .mjs scripts in _build/
+_build/extracted/
+_build/out/
+_build/video-tmp/
+_build/screenshot-*.jpeg
+_build/manifest-report.txt
+
+# Editor / OS noise
+*.swp
+*.swo
+*~
+Thumbs.db
+
+# Local-only tooling
+node_modules/
+*.log
