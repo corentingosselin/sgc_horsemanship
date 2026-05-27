@@ -21,3 +21,4 @@ Thumbs.db
 # Local-only tooling
 node_modules/
 *.log
+.vercel
