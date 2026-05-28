@@ -106,6 +106,53 @@ export async function onRequestPost(context) {
       const detail = await emailRes.text();
       return json({ error: 'email_send_failed', detail }, 502);
     }
+
+    // Auto-reply confirming receipt — only if the visitor gave a valid email.
+    // Failure here MUST NOT fail the form: the request already reached
+    // Coralie's inbox above, which is what matters. We log and move on.
+    if (fields.email && /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(fields.email)) {
+      const ackText = [
+        `Bonjour ${fields.prenom},`,
+        ``,
+        `Merci pour votre demande, je l'ai bien reçue.`,
+        ``,
+        `Je vous recontacte par téléphone sous 48 heures (du lundi au samedi, de 9h à 19h) pour fixer un créneau pour l'appel découverte.`,
+        ``,
+        `En attendant, vous pouvez me joindre directement au 06 34 60 81 83 ou répondre à cet email.`,
+        ``,
+        `À très vite,`,
+        `Coralie`,
+        ``,
+        `—`,
+        `SGC Horsemanship — Coralie Maguet`,
+        `Comportementaliste & éducatrice équine — Nord (59)`,
+        `06 34 60 81 83 — https://sgchorsemanship.fr`,
+      ].join('\n');
+
+      try {
+        const ackRes = await fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            from,
+            to: fields.email,
+            // If they reply, send it to Coralie's real inbox rather than the
+            // no-reply technical address.
+            reply_to: to,
+            subject: `Merci pour votre demande, ${fields.prenom} — SGC Horsemanship`,
+            text: ackText,
+          }),
+        });
+        if (!ackRes.ok) {
+          console.error('Auto-reply failed:', ackRes.status, await ackRes.text());
+        }
+      } catch (e) {
+        console.error('Auto-reply threw:', e?.message || e);
+      }
+    }
   }
 
   return json({ ok: true }, 200);
