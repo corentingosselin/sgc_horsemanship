@@ -1,0 +1,15 @@
+// Cloudflare Workers config — uses the new unified Workers + Static Assets
+// format with the Pages-style `functions/` directory for routing.
+//
+// `pages_build_output_dir` tells wrangler to treat this project the way the
+// legacy Cloudflare Pages CLI did: serve everything in the project root as
+// static assets, AND auto-route any `functions/<path>.js` to /<path>.
+//
+// Concretely that means `functions/api/contact.js` answers /api/contact.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "sgchorsemanship",
+  "compatibility_date": "2026-05-28",
+  "compatibility_flags": ["nodejs_compat"],
+  "pages_build_output_dir": "./"
+}
