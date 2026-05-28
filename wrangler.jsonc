@@ -1,15 +1,28 @@
-// Cloudflare Workers config — uses the new unified Workers + Static Assets
-// format with the Pages-style `functions/` directory for routing.
+// Cloudflare Workers + Static Assets config.
 //
-// `pages_build_output_dir` tells wrangler to treat this project the way the
-// legacy Cloudflare Pages CLI did: serve everything in the project root as
-// static assets, AND auto-route any `functions/<path>.js` to /<path>.
+// `main` is the Worker entry; it dispatches /api/* requests and lets
+// everything else hit the static assets binding `ASSETS`. The assets
+// directory is the project root (the deployable site is at the root —
+// index.html, /assets/, /favicons, /robots.txt, …). Files we don't
+// want uploaded as assets (functions/, src/, CLAUDE.md, etc.) are
+// listed in .assetsignore.
 //
-// Concretely that means `functions/api/contact.js` answers /api/contact.
+// Compat flag `nodejs_compat` is needed because the function uses
+// JSON.stringify / fetch which run fine, but we keep it as a hedge
+// for future Node-style imports.
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "sgchorsemanship",
   "compatibility_date": "2026-05-28",
   "compatibility_flags": ["nodejs_compat"],
-  "pages_build_output_dir": "./"
+  "main": "src/_worker.js",
+  "assets": {
+    "directory": "./",
+    "binding": "ASSETS",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  "observability": {
+    "enabled": true
+  }
 }

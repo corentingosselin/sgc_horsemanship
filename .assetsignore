@@ -1,0 +1,28 @@
+# Files in the project root that should NOT be uploaded as static assets.
+# Everything else under "./" goes to the ASSETS binding. The Worker entry
+# (src/_worker.js) and the function code (functions/api/contact.js) are
+# bundled into the Worker script by wrangler — they don't need to be
+# served as static files.
+
+.git/
+.gitignore
+.vercelignore
+.assetsignore
+CLAUDE.md
+README.md
+*.md
+
+src/
+functions/
+_build/
+
+wrangler.jsonc
+wrangler.toml
+package.json
+package-lock.json
+node_modules/
+.wrangler/
+.vercel/
+.cloudflare/
+
+.DS_Store
