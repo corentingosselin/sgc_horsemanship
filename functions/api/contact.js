@@ -8,7 +8,9 @@
 //   TURNSTILE_SECRET_KEY   — required, the secret half of the Turnstile pair
 //   RESEND_API_KEY         — optional, enables email forwarding via Resend
 //   CONTACT_TO_EMAIL       — optional, recipient address (default contact@sgchorsemanship.fr)
-//   CONTACT_FROM_EMAIL     — optional, From: header (default no-reply@sgchorsemanship.fr)
+//   CONTACT_FROM_EMAIL     — optional, From: header. Default no-reply@send.sgchorsemanship.fr
+//                            (must be on a Resend-verified domain; we verified
+//                            the `send.` subdomain only, so apex would fail SPF/DKIM).
 //
 // Without RESEND_API_KEY the function still validates Turnstile and acks the
 // submission, but doesn't deliver an email. Wire it up once a provider is
@@ -65,7 +67,11 @@ export async function onRequestPost(context) {
   // wire up the provider later without breaking the form in the meantime.
   if (env.RESEND_API_KEY) {
     const to = env.CONTACT_TO_EMAIL || 'contact@sgchorsemanship.fr';
-    const from = env.CONTACT_FROM_EMAIL || 'no-reply@sgchorsemanship.fr';
+    // The From: address must be on the domain verified in Resend. We verified
+    // the `send.` subdomain (DKIM/SPF only on that subdomain), so the apex
+    // would fail SPF/DKIM alignment. Override via CONTACT_FROM_EMAIL env var
+    // if a different verified address is set up later.
+    const from = env.CONTACT_FROM_EMAIL || 'no-reply@send.sgchorsemanship.fr';
     const subject = `Nouvelle demande de contact — ${fields.prenom}`;
     const text = [
       `Nouvelle demande de contact reçue depuis sgchorsemanship.fr.`,
