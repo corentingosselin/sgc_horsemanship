@@ -63,6 +63,14 @@ export async function onRequestPost(context) {
     return json({ error: 'missing_required_fields' }, 400);
   }
 
+  // Phone must be a French number. Strip every separator the user might type
+  // (spaces, dots, dashes, parens) and check the digit shape against either
+  // the +33 international form or the leading-0 national form.
+  const phoneDigits = fields.telephone.replace(/[\s.\-()]/g, '');
+  if (!/^(?:\+33|0)[1-9]\d{8}$/.test(phoneDigits)) {
+    return json({ error: 'invalid_phone' }, 400);
+  }
+
   // 3. Forward email via Resend if configured. If not, just ack so we can
   // wire up the provider later without breaking the form in the meantime.
   if (env.RESEND_API_KEY) {

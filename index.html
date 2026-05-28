@@ -608,7 +608,13 @@
           <input id="contact-prenom" name="prenom" type="text" placeholder="Camille" autocomplete="given-name" required>
         </label>
         <label for="contact-telephone">Téléphone
-          <input id="contact-telephone" name="telephone" type="tel" placeholder="06…" autocomplete="tel" required>
+          <input id="contact-telephone" name="telephone" type="tel"
+                 placeholder="06 34 60 81 83"
+                 pattern="(?:\+33|0)[\s.\-]?[1-9](?:[\s.\-]?\d{2}){4}"
+                 inputmode="tel"
+                 autocomplete="tel"
+                 title="Numéro français — ex&#160;: 06 34 60 81 83 ou +33 6 34 60 81 83"
+                 required>
         </label>
         <label for="contact-email">Email <span class="contact__opt">(optionnel)</span>
           <input id="contact-email" name="email" type="email" placeholder="camille@…" autocomplete="email">
