@@ -1223,6 +1223,16 @@ img, video { display: block; max-width: 100%; }
   font-size: 16px;
   margin: 8px 0 0;
 }
+.contact__sent--error {
+  color: #B0341F;
+}
+
+/* Turnstile widget — keep some breathing room from the inputs above and
+   the submit row below. The widget itself sizes itself (flexible mode). */
+.contact__form .cf-turnstile {
+  margin-top: 4px;
+  min-height: 65px;
+}
 
 @media (max-width: 900px) {
   .contact__card { grid-template-columns: 1fr; }

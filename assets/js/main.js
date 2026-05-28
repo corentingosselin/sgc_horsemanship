@@ -1,3 +1,49 @@
+// Contact form — submits to /api/contact (Cloudflare Pages Function) which
+// validates the Turnstile token and forwards the email. Falls back to native
+// POST if JS is disabled (form has action + method set).
+(function () {
+  const form = document.querySelector('.contact__form');
+  if (!form) return;
+
+  const sentNote = form.querySelector('.contact__sent');
+  const submitBtn = form.querySelector('button[type="submit"]');
+  const defaultSentText = '✓ Merci, votre demande est partie. Je vous rappelle sous 48 h.';
+  const defaultErrText = '✗ Erreur — vérifiez le captcha et réessayez, ou appelez le 06 34 60 81 83.';
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const originalText = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Envoi…';
+    sentNote.hidden = true;
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        body: new FormData(form),
+      });
+      if (!res.ok) throw new Error(`status=${res.status}`);
+      form.reset();
+      sentNote.textContent = defaultSentText;
+      sentNote.classList.remove('contact__sent--error');
+      sentNote.hidden = false;
+    } catch (err) {
+      sentNote.textContent = defaultErrText;
+      sentNote.classList.add('contact__sent--error');
+      sentNote.hidden = false;
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalText;
+      // Reset Turnstile so the user can try again — required on errors and
+      // good UX after success (one token per challenge).
+      if (window.turnstile) {
+        const w = form.querySelector('.cf-turnstile');
+        if (w) window.turnstile.reset(w);
+      }
+    }
+  });
+})();
+
 // "En séance" reels — all 4 videos play in parallel. Hovering one pauses
 // the other three and isolates focus on the hovered reel; mouse-leave
 // restarts them all. Cycle kicks off when the section is near the viewport
