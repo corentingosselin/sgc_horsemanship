@@ -214,6 +214,25 @@
         }
       },
       {
+        "@type": "Review",
+        "@id": "https://sgchorsemanship.fr/#review-ophelie-allizard",
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5",
+          "bestRating": "5"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "Ophélie Allizard"
+        },
+        "reviewBody": "Je suis ravie des cours que j'ai suivis avec Coralie. C'est une personne d'une bienveillance innée, passionnée par les chevaux et profondément investie dans l'accompagnement de ses élèves. Ses analyses du comportement de mon cheval m'ont permis de mieux le comprendre et d'adopter les bonnes réactions dans les situations plus délicates. Grâce à ses conseils, j'ai gagné en confiance et en compréhension de mon cheval. Je recommande Coralie à 100 % pour son professionnalisme, son écoute et la qualité de son accompagnement.",
+        "itemReviewed": { "@id": "https://sgchorsemanship.fr/#service-seance" },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Google"
+        }
+      },
+      {
         "@type": "WebSite",
         "@id": "https://sgchorsemanship.fr/#website",
         "url": "https://sgchorsemanship.fr/",
@@ -535,6 +554,8 @@
       <h2 class="h2"><em>Leur parcours,</em> leur réussite.</h2>
     </header>
 
+    <div class="avis__grid">
+
     <div class="avis__single">
       <figure class="avis__photo-round">
         <picture>
@@ -559,6 +580,34 @@
           <span>Avis Google · Bilan comportemental</span>
         </footer>
       </blockquote>
+    </div>
+
+    <div class="avis__single avis__single--alt">
+      <figure class="avis__photo-round">
+        <picture>
+          <source srcset="/assets/img/avis-ophelie.webp" type="image/webp">
+          <img src="/assets/img/avis-ophelie.jpeg" alt="Ophélie Allizard avec son cheval — élève en séances d'éducation SGC Horsemanship" width="540" height="720" loading="lazy" decoding="async">
+        </picture>
+      </figure>
+
+      <blockquote class="quote quote--hero">
+        <div class="quote__stars" aria-label="5 étoiles sur 5">
+          <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+        <p>
+          Je suis ravie des <em>cours</em> que j'ai suivis avec Coralie. C'est une personne d'une bienveillance innée, passionnée par les chevaux et profondément investie dans l'accompagnement de ses élèves.
+        </p>
+        <p>
+          Ses analyses du comportement de mon cheval m'ont permis de mieux le comprendre et d'adopter les bonnes réactions dans les situations plus délicates. Grâce à ses conseils, j'ai gagné en <em>confiance et en compréhension</em> de mon cheval.
+        </p>
+        <p class="quote__punch">Je recommande Coralie à 100&nbsp;% pour son professionnalisme, son écoute et la qualité de son accompagnement. 😊</p>
+        <footer>
+          <strong>Ophélie Allizard</strong>
+          <span>Avis Google · Séances d'éducation</span>
+        </footer>
+      </blockquote>
+    </div>
+
     </div>
 
     <p class="avis__foot">
@@ -601,9 +650,18 @@
         </ul>
       </div>
 
+      <div class="contact__right">
+        <div class="contact__book">
+          <h3 class="contact__form-title">Réserver un créneau d'appel</h3>
+          <p class="contact__form-sub">Choisissez directement un horaire libre dans mon agenda — confirmation immédiate.</p>
+          <a class="btn btn--solid contact__book-btn" href="https://calendly.com/coraliem1298/appel-telephonique" target="_blank" rel="noopener">Choisir mon créneau d'appel ↗</a>
+        </div>
+
+        <div class="contact__or" aria-hidden="true"><span>ou</span></div>
+
       <form class="contact__form" action="/api/contact" method="POST">
-        <h3 class="contact__form-title">Réserver mon échange téléphonique</h3>
-        <p class="contact__form-sub">Laissez vos coordonnées, je vous rappelle pour fixer un créneau.</p>
+        <h3 class="contact__form-title">Être rappelé·e</h3>
+        <p class="contact__form-sub">Laissez vos coordonnées, je vous rappelle sous 48&nbsp;h pour fixer un créneau ensemble.</p>
         <label for="contact-prenom">Votre prénom
           <input id="contact-prenom" name="prenom" type="text" placeholder="Camille" autocomplete="given-name" required>
         </label>
@@ -633,6 +691,7 @@
         </div>
         <p class="contact__sent" hidden="" role="status">✓ Merci, votre demande est partie. Je vous rappelle sous 48&nbsp;h.</p>
       </form>
+      </div>
     </div>
   </section>
 
