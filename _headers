@@ -16,7 +16,9 @@
 /assets/video/*
   Cache-Control: public, max-age=31536000, immutable
 
-# CSS/JS — moderate cache (changes when we edit the site)
+# CSS/JS — moderate cache. The HTML references these with a ?v=YYYYMMDD query
+# param: bump it in every .html file whenever styles.css or main.js changes,
+# otherwise returning visitors keep the stale cached version for up to 7 days.
 /assets/css/*
   Cache-Control: public, max-age=604800
 

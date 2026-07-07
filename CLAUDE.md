@@ -64,6 +64,8 @@ python3 -m http.server 8765 --bind 127.0.0.1
 
 The site uses absolute paths (`/assets/...`), so `file://` won't work — use a server. Cloudflare Pages will serve the same paths in production.
 
+**Cache-busting rule**: `_headers` caches `/assets/css/*` and `/assets/js/*` for 7 days. The HTML pages therefore reference them with a `?v=YYYYMMDD` query param (e.g. `styles.css?v=20260707`). **Whenever you edit `styles.css` or `main.js`, bump the `?v=` value in all three HTML files** (index, mentions-legales, politique-confidentialite) — otherwise returning visitors get the new HTML with the stale cached CSS/JS and the layout breaks silently.
+
 ## Re-running the bundle extraction (rare)
 
 If the original `SGC Horsemanship.html` is updated and you need to re-derive `assets/`:
