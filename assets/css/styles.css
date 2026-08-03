@@ -966,26 +966,43 @@ img, video { display: block; max-width: 100%; }
   background: var(--cream-soft);
 }
 .avis__grid {
-  max-width: 1360px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(24px, 3vw, 40px);
+  /* full-bleed: cancel the section's side padding so cards clip at the real
+     screen edge, then restore it inside the scroller */
+  margin: 0 calc(-1 * clamp(20px, 3vw, 44px));
+  display: flex;
+  gap: clamp(20px, 2.5vw, 32px);
   align-items: stretch;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: clamp(20px, 3vw, 44px);
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  /* top padding = round photo overhang so it isn't clipped by the scroller */
+  padding: 34px clamp(20px, 3vw, 44px) 30px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--rose) transparent;
+}
+.avis__grid::-webkit-scrollbar { height: 6px; }
+.avis__grid::-webkit-scrollbar-track { background: transparent; }
+.avis__grid::-webkit-scrollbar-thumb {
+  background: var(--rose);
+  border-radius: 999px;
 }
 .avis__single {
   position: relative;
-  padding: 20px 0 0;
+  padding: 16px 0 0;
   display: flex;
+  flex: 0 0 min(83vw, 400px);
+  scroll-snap-align: center;
 }
 .avis__photo-round {
   position: absolute;
-  top: -34px; right: -14px;
-  width: 150px; height: 150px;
+  top: -28px; right: -8px;
+  width: 112px; height: 112px;
   margin: 0;
   border-radius: 50%;
   overflow: hidden;
-  border: 8px solid var(--cream-soft);
+  border: 6px solid var(--cream-soft);
   box-shadow: 0 20px 40px -20px rgba(80, 40, 40, 0.35);
   z-index: 2;
   transform: rotate(4deg);
@@ -1000,7 +1017,7 @@ img, video { display: block; max-width: 100%; }
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding: 54px 44px 40px;
+  padding: 38px 30px 28px;
   background: var(--milk);
   border-radius: var(--r-card);
   border: 1px solid rgba(180, 114, 121, 0.12);
@@ -1010,25 +1027,25 @@ img, video { display: block; max-width: 100%; }
 .quote--hero::before {
   content: "“";
   position: absolute;
-  top: 0; left: 30px;
+  top: 0; left: 22px;
   font-family: var(--serif);
-  font-size: 140px;
+  font-size: 96px;
   color: var(--rose);
   line-height: 1;
 }
 .quote__stars {
-  display: flex; gap: 4px;
+  display: flex; gap: 3px;
   color: #E8B850;
-  font-size: 22px;
-  margin: 0 0 18px;
+  font-size: 16px;
+  margin: 0 0 12px;
   letter-spacing: 2px;
 }
 .quote--hero p {
   font-family: var(--serif-c);
-  font-size: clamp(18px, 1.5vw, 20px);
-  line-height: 1.55;
+  font-size: 16px;
+  line-height: 1.5;
   color: var(--ink-soft);
-  margin: 0 0 14px;
+  margin: 0 0 10px;
   font-style: italic;
   font-weight: 400;
 }
@@ -1041,25 +1058,25 @@ img, video { display: block; max-width: 100%; }
   font-family: var(--serif) !important;
   font-style: italic !important;
   color: var(--mauve) !important;
-  font-size: 21px !important;
-  margin: 16px 0 24px !important;
+  font-size: 17px !important;
+  margin: 10px 0 18px !important;
 }
 .quote--hero footer {
-  display: flex; flex-direction: column; gap: 4px;
+  display: flex; flex-direction: column; gap: 3px;
   margin-top: auto;
-  padding-top: 18px;
+  padding-top: 14px;
   border-top: 1px solid rgba(180, 114, 121, 0.18);
   font-style: normal;
 }
 .quote--hero footer strong {
   font-family: var(--serif-c);
-  font-size: 19px;
+  font-size: 16px;
   color: var(--ink);
   font-style: italic;
   font-weight: 600;
 }
 .quote--hero footer span {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--ink-mute);
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -1081,22 +1098,15 @@ img, video { display: block; max-width: 100%; }
   margin-left: 6px;
 }
 
-@media (max-width: 920px) {
-  .avis__grid {
-    grid-template-columns: 1fr;
-    gap: 64px;
-    max-width: 640px;
-  }
-}
 @media (max-width: 700px) {
   .avis__photo-round {
-    width: 130px; height: 130px;
-    top: -30px; right: 10px;
+    width: 104px; height: 104px;
+    top: -26px; right: 6px;
   }
   .quote--hero {
-    padding: 40px 30px 36px;
+    padding: 34px 24px 26px;
   }
-  .quote--hero::before { font-size: 100px; left: 16px; }
+  .quote--hero::before { font-size: 84px; left: 14px; }
 }
 
 /* ============ CONTACT ============ */
