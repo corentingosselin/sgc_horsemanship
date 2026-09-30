@@ -45,7 +45,7 @@
   <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/dm-serif-display-latin.woff2" crossorigin>
   <link rel="preload" as="image" href="/assets/img/hero-coralie.webp" type="image/webp">
 
-  <link rel="stylesheet" href="/assets/css/styles.css?v=20260803">
+  <link rel="stylesheet" href="/assets/css/styles.css?v=20260930">
 
   <!-- Cloudflare Turnstile — invisible CAPTCHA for the contact form -->
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" defer></script>
@@ -141,7 +141,7 @@
         "@id": "https://sgchorsemanship.fr/#service-bilan-comportemental",
         "serviceType": "Bilan comportemental cheval",
         "name": "Bilan comportemental",
-        "description": "Une lecture complète de votre cheval : son historique, ses conditions de vie, ses comportements. Solutions concrètes et respectueuses pour construire une relation de confiance.",
+        "description": "Une lecture complète de votre cheval : son historique, ses conditions de vie, ses comportements, sa posture et sa locomotion. Solutions concrètes et respectueuses pour construire une relation de confiance.",
         "provider": { "@id": "https://sgchorsemanship.fr/#business" },
         "areaServed": [
           { "@type": "AdministrativeArea", "name": "Nord (59)" },
@@ -153,14 +153,6 @@
           "priceCurrency": "EUR",
           "availability": "https://schema.org/InStock"
         }
-      },
-      {
-        "@type": "Service",
-        "@id": "https://sgchorsemanship.fr/#service-bilan-posture",
-        "serviceType": "Bilan posture et locomotion équine",
-        "name": "Bilan posture & locomotion",
-        "description": "Observation et analyse biomécanique de votre cheval pour faire le point sur son état physique, avec des solutions concrètes pour améliorer sa posture et sa locomotion.",
-        "provider": { "@id": "https://sgchorsemanship.fr/#business" }
       },
       {
         "@type": "Service",
@@ -448,27 +440,14 @@
         <div class="svc__body">
           <span class="svc__num" aria-hidden="true">01</span>
           <h3>Bilan comportemental</h3>
-          <p>Une lecture complète de votre cheval : son historique, ses conditions de vie, ses comportements. Je vous donne des solutions concrètes et respectueuses pour construire une relation de confiance avec votre cheval.</p>
+          <p>Une lecture complète de votre cheval : son historique, ses conditions de vie, ses comportements, sa posture et sa locomotion. Je vous donne des solutions concrètes et respectueuses pour construire une relation de confiance avec votre cheval.</p>
           <ul class="svc__list">
             <li>Historique &amp; conditions de vie</li>
             <li>Observation des comportements</li>
+            <li>Posture &amp; locomotion</li>
             <li>Solutions concrètes &amp; respectueuses</li>
           </ul>
           <span class="svc__price"><strong>110&nbsp;€</strong></span>
-        </div>
-      </article>
-
-      <article class="svc">
-        <div class="svc__photo">
-          <picture>
-            <source srcset="/assets/img/service-bilan-posture-locomotion.webp" type="image/webp">
-            <img src="/assets/img/service-bilan-posture-locomotion.png" alt="Bilan posture et locomotion cheval — analyse biomécanique équine" width="500" height="500" loading="lazy" decoding="async">
-          </picture>
-        </div>
-        <div class="svc__body">
-          <span class="svc__num" aria-hidden="true">02</span>
-          <h3>Bilan posture &amp; locomotion</h3>
-          <p>Observation et analyse biomécanique de votre cheval, pour faire le point sur son état physique — avec des solutions concrètes pour améliorer sa posture et sa locomotion.</p>
         </div>
       </article>
 
@@ -480,7 +459,7 @@
           </picture>
         </div>
         <div class="svc__body">
-          <span class="svc__num" aria-hidden="true">03</span>
+          <span class="svc__num" aria-hidden="true">02</span>
           <h3>Séance individuelle</h3>
           <p>Éducation à pied en présentiel, pour avancer pas à pas sur un objectif concret : embarquement, soins, gestion des émotions, mise en confiance…</p>
         </div>
@@ -494,7 +473,7 @@
           </picture>
         </div>
         <div class="svc__body">
-          <span class="svc__num" aria-hidden="true">04</span>
+          <span class="svc__num" aria-hidden="true">03</span>
           <h3>Accompagnement sur-mesure</h3>
           <p>Un suivi régulier sur plusieurs semaines ou mois, pour transformer durablement la relation. Forfaits dégressifs.</p>
         </div>
@@ -508,7 +487,7 @@
           </picture>
         </div>
         <div class="svc__body">
-          <span class="svc__num" aria-hidden="true">05</span>
+          <span class="svc__num" aria-hidden="true">04</span>
           <h3>Analyse vidéo · à distance</h3>
           <p>Vous m'envoyez vos vidéos, je vous renvoie une analyse détaillée &amp; des exercices personnalisés. Idéal si je ne peux pas me déplacer chez vous.</p>
         </div>
@@ -522,7 +501,7 @@
           </picture>
         </div>
         <div class="svc__body">
-          <span class="svc__num" aria-hidden="true">06</span>
+          <span class="svc__num" aria-hidden="true">05</span>
           <h3>Stages &amp; ateliers</h3>
           <p>Demi-journées thématiques en petit groupe : éthologie de base, langage corporel, soins coopératifs, désensibilisation, jeune cheval.</p>
         </div>
@@ -803,7 +782,7 @@
     </div>
   </footer>
 
-  <script src="/assets/js/main.js?v=20260803"></script>
+  <script src="/assets/js/main.js?v=20260930"></script>
 
   <!-- Web Analytics is injected automatically by Cloudflare Pages when
        enabled in the project's Web Analytics tab. No script needed here. -->

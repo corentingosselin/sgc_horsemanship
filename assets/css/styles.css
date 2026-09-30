@@ -871,9 +871,11 @@ img, video { display: block; max-width: 100%; }
 @media (max-width: 1000px) {
   .services__grid { grid-template-columns: repeat(2, 1fr); }
   .svc, .svc--lg, .svc--lg ~ .svc:nth-of-type(2) { grid-column: span 1; }
+  .svc:last-child:nth-child(odd) { grid-column: span 2; } /* odd count: last card full width */
 }
 @media (max-width: 600px) {
   .services__grid { grid-template-columns: 1fr; }
+  .svc:last-child:nth-child(odd) { grid-column: span 1; }
 }
 
 /* ============ REELS ============ */
