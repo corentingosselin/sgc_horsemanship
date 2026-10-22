@@ -7,8 +7,10 @@
 
   const sentNote = form.querySelector('.contact__sent');
   const submitBtn = form.querySelector('button[type="submit"]');
-  const defaultSentText = '✓ Merci, votre demande est partie. Je vous rappelle sous 48 h.';
-  const defaultErrText = '✗ Erreur — vérifiez le captcha et réessayez, ou appelez le 06 34 60 81 83.';
+  // Pages can override the messages (the sales page uses "tu") via
+  // data-sent / data-error on the status paragraph.
+  const defaultSentText = sentNote.dataset.sent || '✓ Merci, votre demande est partie. Je vous rappelle sous 48 h.';
+  const defaultErrText = sentNote.dataset.error || '✗ Erreur — vérifiez le captcha et réessayez, ou appelez le 06 34 60 81 83.';
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -102,7 +104,7 @@
 // script does is add `.in` when an element enters the viewport.
 (function () {
   const targets = document.querySelectorAll(
-    '.hero__copy, .hero__photo, .about__photo, .about__copy, .section-head, .svc, .reel, .quote, .quote--hero, .avis__single, .contact__card'
+    '.hero__copy, .hero__photo, .about__photo, .about__copy, .section-head, .svc, .reel, .quote, .quote--hero, .avis__single, .contact__card, .reveal'
   );
 
   // Reveal any element already in viewport immediately (covers above-the-fold).

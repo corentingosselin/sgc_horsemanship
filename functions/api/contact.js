@@ -18,6 +18,12 @@
 
 const TURNSTILE_VERIFY_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
 
+// Offers a form can be tagged with (hidden `offre` field). Whitelisted so the
+// value can be echoed into the email subject safely; anything else is ignored.
+const OFFERS = {
+  serenite: 'Accompagnement Sérénité',
+};
+
 export async function onRequestPost(context) {
   const { request, env } = context;
 
@@ -59,6 +65,7 @@ export async function onRequestPost(context) {
     cheval: (formData.get('cheval') || '').toString().trim().slice(0, 200),
     message: (formData.get('message') || '').toString().trim().slice(0, 4000),
   };
+  const offre = OFFERS[(formData.get('offre') || '').toString()] || '';
   if (!fields.prenom || !fields.telephone) {
     return json({ error: 'missing_required_fields' }, 400);
   }
@@ -79,10 +86,13 @@ export async function onRequestPost(context) {
     // Resend-verified address). DKIM `resend._domainkey.sgchorsemanship.fr`
     // signs with d=apex → aligns with From: apex for DMARC.
     const from = env.CONTACT_FROM_EMAIL || 'SGC Horsemanship <no-reply@sgchorsemanship.fr>';
-    const subject = `Nouvelle demande de contact — ${fields.prenom}`;
+    const subject = offre
+      ? `[${offre}] Nouvelle demande — ${fields.prenom}`
+      : `Nouvelle demande de contact — ${fields.prenom}`;
     const text = [
       `Nouvelle demande de contact reçue depuis sgchorsemanship.fr.`,
       ``,
+      `Offre     : ${offre || '— (formulaire général)'}`,
       `Prénom    : ${fields.prenom}`,
       `Téléphone : ${fields.telephone}`,
       `Email     : ${fields.email || '—'}`,
@@ -119,7 +129,24 @@ export async function onRequestPost(context) {
     // Failure here MUST NOT fail the form: the request already reached
     // Coralie's inbox above, which is what matters. We log and move on.
     if (fields.email && /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(fields.email)) {
-      const ackText = [
+      // The sales page speaks "tu"; keep the auto-reply in the same register.
+      const ackText = offre ? [
+        `Bonjour ${fields.prenom},`,
+        ``,
+        `Merci pour ton message au sujet de l'${offre}, je l'ai bien reçu.`,
+        ``,
+        `Je te rappelle sous 48 heures (du lundi au samedi, de 9h à 19h) pour échanger sur ta situation et voir ensemble si l'accompagnement est adapté à toi et à ton cheval.`,
+        ``,
+        `En attendant, tu peux me joindre directement au 06 34 60 81 83 ou répondre à cet email.`,
+        ``,
+        `À très vite,`,
+        `Coralie`,
+        ``,
+        `—`,
+        `SGC Horsemanship — Coralie Maguet`,
+        `Comportementaliste & éducatrice équine — Nord (59)`,
+        `06 34 60 81 83 — https://sgchorsemanship.fr`,
+      ].join('\n') : [
         `Bonjour ${fields.prenom},`,
         ``,
         `Merci pour votre demande, je l'ai bien reçue.`,
@@ -150,7 +177,9 @@ export async function onRequestPost(context) {
             // If they reply, send it to Coralie's real inbox rather than the
             // no-reply technical address.
             reply_to: to,
-            subject: `Merci pour votre demande, ${fields.prenom} — SGC Horsemanship`,
+            subject: offre
+              ? `Merci pour ton message, ${fields.prenom} — SGC Horsemanship`
+              : `Merci pour votre demande, ${fields.prenom} — SGC Horsemanship`,
             text: ackText,
           }),
         });
