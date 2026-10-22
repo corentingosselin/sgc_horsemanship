@@ -2271,3 +2271,61 @@ img, video { display: block; max-width: 100%; }
 .insight__eyebrow { color: var(--pink-pale); }
 .insight__eyebrow .eyebrow__line { background: var(--rose); }
 
+
+/* --- Sales page photos --- */
+.sale-hero__frame img { object-position: 60% 50%; }
+
+.insight__inner--split {
+  max-width: var(--max);
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: clamp(36px, 5vw, 80px);
+  align-items: center;
+  text-align: left;
+}
+.insight__inner--split .insight__intro,
+.insight__inner--split .insight__outro { margin-left: 0; margin-right: 0; }
+.insight__inner--split .insight__chips { justify-content: flex-start; margin-left: 0; }
+.insight__photo {
+  margin: 0;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--r-card);
+  overflow: hidden;
+  box-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.6);
+}
+.insight__photo img,
+.insight__photo picture { width: 100%; height: 100%; object-fit: cover; object-position: 42% 50%; }
+@media (max-width: 900px) {
+  .insight__inner--split { grid-template-columns: 1fr; }
+  .insight__photo { aspect-ratio: 4 / 3; max-width: 520px; }
+}
+
+.shift__photo {
+  position: relative;
+  max-width: 1080px;
+  margin: 56px auto 0;
+  aspect-ratio: 21 / 9;
+  border-radius: var(--r-card);
+  overflow: hidden;
+}
+.shift__photo img,
+.shift__photo picture { width: 100%; height: 100%; object-fit: cover; object-position: 50% 35%; }
+.shift__photo figcaption {
+  position: absolute;
+  left: 50%; bottom: 18px;
+  transform: translateX(-50%) rotate(-2deg);
+  padding: 4px 26px;
+  border-radius: var(--r-pill);
+  background: var(--cream-soft);
+  font-family: var(--script);
+  font-size: clamp(26px, 3vw, 38px);
+  line-height: 1.3;
+  color: var(--mauve);
+  white-space: nowrap;
+  box-shadow: 0 10px 24px -12px rgba(40, 20, 20, 0.5);
+}
+@media (max-width: 600px) {
+  .shift__photo { aspect-ratio: 4 / 3; }
+}
+
+.about__photo--story img { object-position: 64% 50%; }
